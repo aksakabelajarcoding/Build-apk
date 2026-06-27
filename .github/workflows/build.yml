@@ -26,7 +26,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.44.0'
+          flutter-version: '3.27.0'
           channel: stable
           cache: true
 
@@ -42,8 +42,6 @@ jobs:
           flutter pub add webview_flutter
           flutter pub add flutter_launcher_icons
           flutter pub add connectivity_plus
-
-          # Menambahkan konfigurasi assets ke baris paling bawah untuk menghindari error indentasi YAML
           echo "  assets:" >> pubspec.yaml
           echo "    - assets/icon/" >> pubspec.yaml
 
@@ -73,7 +71,7 @@ jobs:
             @override
             Widget build(BuildContext context) {
               return MaterialApp(
-                title: r'$APP_NAME',
+                title: '$APP_NAME',
                 debugShowCheckedModeBanner: false,
                 theme: ThemeData(useMaterial3: true, primarySwatch: Colors.blue),
                 home: const SplashScreen(),
@@ -286,7 +284,7 @@ jobs:
                         ),
                         const SizedBox(height: 28),
                         Text(
-                          r'$APP_NAME',
+                          '$APP_NAME',
                           style: const TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.w700,
@@ -338,7 +336,7 @@ jobs:
                     if (error.isForMainFrame == true) _showNoConnectionDialog();
                   },
                 ))
-                ..loadRequest(Uri.parse(r'$WEB_URL'));
+                ..loadRequest(Uri.parse('$WEB_URL'));
 
               _connectivitySub = _connectivity.onConnectivityChanged.listen((results) {
                 if (results.every((r) => r == ConnectivityResult.none)) {
@@ -411,9 +409,8 @@ jobs:
           }
           DART
 
-          # Mengubah pembatas slash (/) menjadi pagar (#) agar link HTTP tidak merusak regex sed
-          sed -i "s#r'\$APP_NAME'#'$APP_NAME'#g" myapp/lib/main.dart
-          sed -i "s#r'\$WEB_URL'#'$WEB_URL'#g" myapp/lib/main.dart
+          sed -i "s#'\$APP_NAME'#'$APP_NAME'#g" myapp/lib/main.dart
+          sed -i "s#'\$WEB_URL'#'$WEB_URL'#g" myapp/lib/main.dart
 
       - name: Fix Android Permissions and App Name
         run: |
@@ -446,13 +443,9 @@ jobs:
           mkdir -p myapp/assets/icon
           sudo apt-get install -y imagemagick
 
-          curl -L \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/octet-stream" \
-            "${{ github.event.inputs.icon_url }}" \
+          curl -L "${{ github.event.inputs.icon_url }}" \
             -o myapp/assets/icon/icon_raw
 
-          # Mengubah gambar menjadi format PNG 1024x1024 yang valid
           convert myapp/assets/icon/icon_raw \
             -background transparent \
             -gravity center \
@@ -479,6 +472,14 @@ jobs:
         run: |
           cd myapp
           flutter build apk --release
+
+      - name: Verify APK
+        run: |
+          if [ ! -f "myapp/build/app/outputs/flutter-apk/app-release.apk" ]; then
+            echo "❌ APK tidak ditemukan!"
+            exit 1
+          fi
+          echo "✅ APK berhasil dibuat!"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
