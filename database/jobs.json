@@ -26,5 +26,15 @@
     "created_at": "2026-06-28T08:23:55.210Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mqxw8d8ok0qv": {
+    "job_id": "mqxw8d8ok0qv",
+    "release_id": 345925399,
+    "release_tag": "build-mqxw8d8ok0qv",
+    "run_id": 28325633786,
+    "user_id": 8661957052,
+    "created_at": "2026-06-28T14:38:01.620Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
