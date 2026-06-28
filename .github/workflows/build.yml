@@ -1,3 +1,4 @@
+# .github/workflows/build.yml
 name: Build Flutter APK
 
 on:
@@ -30,17 +31,11 @@ jobs:
     
     steps:
 
-      # =========================
-      # NODE.JS
-      # =========================
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "24"
 
-      # =========================
-      # DOWNLOAD ZIP
-      # =========================
       - name: Download ZIP project
         run: |
           echo "=== Downloading ZIP ==="
@@ -65,9 +60,6 @@ jobs:
           echo "=== First Bytes ==="
           xxd project.zip | head -2
 
-      # =========================
-      # EXTRACT ZIP
-      # =========================
       - name: Extract ZIP
         run: |
           echo "=== Validating ZIP ==="
@@ -105,18 +97,12 @@ jobs:
           echo "✅ Project root langsung dikunci di: $PROJECT_DIR"
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
 
-      # =========================
-      # JAVA
-      # =========================
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "17"
 
-      # =========================
-      # FLUTTER
-      # =========================
       - name: Setup Flutter
         uses: subosito/flutter-action@main
         with:
@@ -124,10 +110,6 @@ jobs:
           channel: "stable"
           cache: true
 
-      # ==========================================================
-      # 🔍 TAHAP ANALYZE — STEP 1: Jalankan & cetak hasil
-      # (Dipisah dari exit 1 biar log tidak ter-truncate)
-      # ==========================================================
       - name: Analyze Project Code
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
@@ -151,25 +133,15 @@ jobs:
             echo "[END_RESULT_ANALYZE]"
           fi
 
-      # ==========================================================
-      # 🔍 TAHAP ANALYZE — STEP 2: Stop workflow jika only_analyze
-      # (Dipisah biar log step di atas sudah ter-commit ke GitHub)
-      # ==========================================================
       - name: Stop if Analyze Only
         if: ${{ github.event.inputs.only_analyze == 'true' }}
         run: |
           echo "Analyze-only mode aktif. Workflow dihentikan di sini."
           exit 1
 
-      # =========================
-      # FLUTTER DOCTOR
-      # =========================
       - name: Flutter Doctor
         run: flutter doctor
 
-      # ==========================================================
-      # 📦 TAHAP DOWNLOAD DEPENDENSI (PUB GET)
-      # ==========================================================
       - name: Get dependencies
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
@@ -180,9 +152,6 @@ jobs:
             echo "☕ Bukan project Flutter standar, skip pub get!"
           fi
 
-      # ==========================================================
-      # 🚀 TAHAP PEMBAKARAN UTAMA (BUILD APK)
-      # ==========================================================
       - name: Build APK
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
@@ -216,9 +185,6 @@ jobs:
             cd -
           fi
 
-      # =========================
-      # CHECK APK
-      # =========================
       - name: Check APK Output
         run: |
           echo "=== APK Output Scanning (Global Mode) ==="
@@ -244,13 +210,10 @@ jobs:
           echo "=== APK Size ==="
           ls -lh "$APK_FOUND"
 
-      # =========================
-      # UPLOAD APK
-      # =========================
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: flutter-${{ github.event.inputs.build_type }}-${{ github.event.inputs.tag }}
           path: ${{ env.PROJECT_DIR }}/${{ env.APK_PATH }}
-          retention-days: 1
+          retention-days: 7
           if-no-files-found: error
