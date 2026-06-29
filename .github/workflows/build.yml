@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       zip_url:
-        description: "URL download ZIP project Flutter (dari GitHub Release)"
+        description: "URL download ZIP project Flutter"
         required: true
       tag:
         description: "Tag build untuk identifikasi"
@@ -33,7 +33,7 @@ jobs:
           node-version: "20"
 
       # =========================
-      # DOWNLOAD ZIP
+      # DOWNLOAD ZIP DENGAN DEBUG
       # =========================
       - name: Download ZIP project
         run: |
@@ -50,6 +50,14 @@ jobs:
           echo ""
           echo "=== File Info ==="
           ls -lh project.zip
+          
+          echo ""
+          echo "=== File Type ==="
+          file project.zip
+          
+          echo ""
+          echo "=== First 100 bytes ==="
+          xxd project.zip | head -10
 
       # =========================
       # VALIDASI & EXTRACT ZIP
@@ -74,7 +82,7 @@ jobs:
 
           echo ""
           echo "=== Isi folder project_raw ==="
-          find project_raw -maxdepth 2 | head -30
+          find project_raw -maxdepth 3 | head -50
 
           echo ""
           echo "=== Menentukan Project Root ==="
@@ -85,13 +93,41 @@ jobs:
           
           if [ "$SUB_DIR_COUNT" -eq 1 ] && [ "$FILE_COUNT" -eq 0 ]; then
             PROJECT_DIR=$(find project_raw -maxdepth 1 -mindepth 1 -type d | head -n 1)
-            echo "✅ Project root: $PROJECT_DIR"
+            echo "✅ Project root (1 folder pembungkus): $PROJECT_DIR"
           else
             PROJECT_DIR="project_raw"
-            echo "✅ Project root: $PROJECT_DIR"
+            echo "✅ Project root (langsung): $PROJECT_DIR"
           fi
 
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
+          
+          echo ""
+          echo "=== Isi Project Root ==="
+          ls -la "$PROJECT_DIR"
+
+      # =========================
+      # CEK PUBSPEC.YAML
+      # =========================
+      - name: Check pubspec.yaml
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo "=== Checking pubspec.yaml ==="
+          
+          if [ -f "pubspec.yaml" ]; then
+            echo "✅ pubspec.yaml ditemukan!"
+            echo ""
+            echo "=== Isi pubspec.yaml ==="
+            cat pubspec.yaml
+          else
+            echo "❌ pubspec.yaml TIDAK DITEMUKAN!"
+            echo ""
+            echo "Mencari file di project root:"
+            ls -la
+            echo ""
+            echo "Mencari pubspec.yaml di seluruh folder:"
+            find . -name "pubspec.yaml"
+            exit 1
+          fi
 
       # =========================
       # SETUP JAVA
@@ -112,19 +148,38 @@ jobs:
           channel: "stable"
           cache: true
 
+      # =========================
+      # FLUTTER DOCTOR
+      # =========================
+      - name: Flutter Doctor
+        run: flutter doctor -v
+
       # ==========================================================
       # 🔍 ANALYZE PROJECT
       # ==========================================================
       - name: Analyze Project Code
         working-directory: ${{ env.PROJECT_DIR }}
+        continue-on-error: true
         run: |
           echo "=== Starting Automated Code Analysis ==="
-
-          if [ -f "pubspec.yaml" ]; then
-            echo "🔍 Menjalankan flutter analyze..."
-            flutter analyze || true
+          
+          flutter analyze || true
+          
+          echo ""
+          echo "=== Check for specific issues ==="
+          
+          # Cek error umum
+          if grep -r "import 'package:" . --include="*.dart" | grep -v "flutter/material" | grep -v "flutter/services" | head -20; then
+            echo "⚠️ Ada import package yang mungkin bermasalah"
+          fi
+          
+          # Cek MainActivity
+          if [ -f "android/app/src/main/java/**/MainActivity.kt" ]; then
+            echo "✅ MainActivity.kt ditemukan"
+          elif [ -f "android/app/src/main/java/**/MainActivity.java" ]; then
+            echo "✅ MainActivity.java ditemukan"
           else
-            echo "⚠️ pubspec.yaml tidak ditemukan, skip analyze"
+            echo "⚠️ MainActivity tidak ditemukan!"
           fi
 
       # ==========================================================
@@ -136,77 +191,69 @@ jobs:
           echo "✅ Analyze-only mode selesai. Workflow dihentikan."
           exit 0
 
-      # =========================
-      # FLUTTER DOCTOR
-      # =========================
-      - name: Flutter Doctor
-        run: flutter doctor
-
       # ==========================================================
-      # 📦 INSTALL DEPENDENCIES
+      # 📦 INSTALL DEPENDENCIES DENGAN DEBUG
       # ==========================================================
       - name: Install Dependencies
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo "=== Installing dependencies ==="
           
-          if [ -f "pubspec.yaml" ]; then
-            flutter pub get
+          echo "Running flutter pub get..."
+          flutter pub get
+          
+          echo ""
+          echo "=== Check pubspec.lock ==="
+          if [ -f "pubspec.lock" ]; then
+            echo "✅ pubspec.lock created"
+            cat pubspec.lock | head -30
           else
-            echo "⚠️ pubspec.yaml tidak ditemukan, skip pub get"
+            echo "⚠️ pubspec.lock tidak dibuat!"
           fi
 
       # ==========================================================
-      # 🚀 BUILD APK
+      # 🚀 BUILD APK DENGAN DEBUG
       # ==========================================================
       - name: Build APK
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo "=== Building APK ==="
           echo "Mode: ${{ github.event.inputs.build_type }}"
-
-          if [ -f "pubspec.yaml" ]; then
-            echo "📱 Flutter project detected"
-            flutter build apk --${{ github.event.inputs.build_type }}
-          else
-            echo "☕ Checking for Gradle project..."
-            
-            # Cari gradlew
-            GRADLE_PATH=$(find . -name "gradlew" -type f | head -n 1)
-            
-            if [ -z "$GRADLE_PATH" ]; then
-              echo "❌ ERROR: File 'gradlew' tidak ditemukan!"
-              echo "Pastikan project adalah Flutter atau Android native yang valid."
-              exit 1
-            fi
-            
-            GRADLE_DIR=$(dirname "$GRADLE_PATH")
-            cd "$GRADLE_DIR"
-            chmod +x gradlew
-            
-            echo "🚀 Building with Gradle..."
-            if [ "${{ github.event.inputs.build_type }}" = "debug" ]; then
-              ./gradlew assembleDebug
-            else
-              ./gradlew assembleRelease
-            fi
-            cd -
-          fi
+          echo "Current directory: $(pwd)"
+          echo ""
+          
+          echo "=== Flutter version ==="
+          flutter --version
+          
+          echo ""
+          echo "=== Build command ==="
+          echo "flutter build apk --${{ github.event.inputs.build_type }}"
+          
+          # Jalankan build dengan output verbose
+          flutter build apk --${{ github.event.inputs.build_type }} -v
 
       # =========================
-      # FIND APK
+      # FIND APK DENGAN DEBUG
       # =========================
       - name: Find APK
         id: find_apk
         run: |
           echo "=== Searching for APK ==="
           
+          echo "Mencari di seluruh workspace:"
+          find $GITHUB_WORKSPACE -name "*.apk" -type f 2>/dev/null || echo "Tidak ada APK ditemukan"
+          
+          echo ""
+          echo "Mencari di folder build:"
+          find $GITHUB_WORKSPACE -path "*/build/app/outputs/flutter-apk/*.apk" -type f 2>/dev/null || echo "Tidak ada APK di build/app/outputs"
+          
           APK_FOUND=$(find $GITHUB_WORKSPACE -name "*.apk" -type f | head -n 1)
           
           if [ -z "$APK_FOUND" ]; then
             echo "❌ APK tidak ditemukan!"
-            echo "Mencari semua file hasil build..."
-            find $GITHUB_WORKSPACE -type f -name "*.apk" || true
+            echo ""
+            echo "=== Isi folder build ==="
+            find $GITHUB_WORKSPACE -name "build" -type d -exec ls -la {} \; 2>/dev/null || echo "Folder build tidak ditemukan"
             exit 1
           fi
           
