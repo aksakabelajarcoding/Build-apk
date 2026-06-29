@@ -7,20 +7,24 @@ on:
       zip_url:
         description: "URL download ZIP project Flutter"
         required: true
+        type: string
 
       tag:
         description: "Tag build"
         required: true
+        type: string
 
       build_type:
         description: "debug / release"
         required: true
         default: "release"
+        type: string
         
       only_analyze:
         description: "Hanya jalankan analyze (true/false)"
         required: false
         default: "false"
+        type: string
 
 jobs:
   build:
@@ -106,7 +110,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@main
         with:
-          flutter-version: "3.41.9"
+          flutter-version: "3.22.4"
           channel: "stable"
           cache: true
 
@@ -190,9 +194,9 @@ jobs:
           echo "=== APK Output Scanning (Global Mode) ==="
 
           echo "Mencari file APK di seluruh direktori..."
-          find $GITHUB_WORKSPACE -name "*.apk"
+          find $GITHUB_WORKSPACE -name "*.apk" -type f
 
-          APK_FOUND=$(find $GITHUB_WORKSPACE -name "*.apk" | head -n 1)
+          APK_FOUND=$(find $GITHUB_WORKSPACE -name "*.apk" -type f | head -n 1)
 
           if [ -z "$APK_FOUND" ]; then
             echo "Error: Berkas biner APK beneran gak dicetak sama sekali oleh compiler."
