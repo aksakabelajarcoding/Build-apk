@@ -36,5 +36,15 @@
     "created_at": "2026-06-29T05:18:51.476Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr08kurrkgux": {
+    "job_id": "mr08kurrkgux",
+    "release_id": 346641290,
+    "release_tag": "build-mr08kurrkgux",
+    "run_id": 28423693046,
+    "user_id": 8528625884,
+    "created_at": "2026-06-30T05:59:10.130Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
