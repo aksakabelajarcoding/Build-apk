@@ -56,5 +56,15 @@
     "created_at": "2026-07-01T05:17:38.533Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr1mwel1ekd2": {
+    "job_id": "mr1mwel1ekd2",
+    "release_id": 347246398,
+    "release_tag": "build-mr1mwel1ekd2",
+    "run_id": 28495740766,
+    "user_id": 1953607053,
+    "created_at": "2026-07-01T05:28:46.695Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
