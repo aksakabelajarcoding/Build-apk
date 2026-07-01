@@ -35,8 +35,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     
     steps:
 
@@ -49,7 +47,7 @@ jobs:
           rm -rf $GITHUB_WORKSPACE/.* || true
 
       # =========================
-      # CHECKOUT REPO (BUTUH UNTUK WORKFLOW)
+      # CHECKOUT REPO
       # =========================
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -70,7 +68,6 @@ jobs:
           echo "=== Downloading ZIP ==="
           echo "URL: ${{ github.event.inputs.zip_url }}"
 
-          # Coba dengan User-Agent dan tanpa Auth dulu (untuk public URL)
           curl -L \
             -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
             -H "Accept: application/octet-stream" \
@@ -82,31 +79,23 @@ jobs:
           echo "=== File Info ==="
           ls -lh project.zip
 
-          echo ""
-          echo "=== File Type ==="
-          file project.zip
-
       # =========================
       # VALIDASI & EKSTRAK ZIP
       # =========================
-      - name: Validate and Extract ZIP
+      - name: Extract ZIP
         run: |
-          echo "=== Validating ZIP ==="
-
-          if ! file project.zip | grep -q "Zip archive"; then
-            echo "❌ File bukan ZIP valid!"
-            echo ""
-            echo "=== Isi file (first 200 chars) ==="
-            head -c 200 project.zip
-            echo ""
-            exit 1
-          fi
-
-          echo "✅ ZIP valid"
-
-          echo ""
           echo "=== Extracting ZIP ==="
-          unzip -q project.zip -d project_raw
+          
+          # Coba unzip dengan force
+          unzip -o -q project.zip -d project_raw || {
+            echo "❌ Failed to unzip! Trying with different method..."
+            # Coba dengan 7z
+            sudo apt-get install -y p7zip-full
+            7z x project.zip -oproject_raw || {
+              echo "❌ Both unzip and 7z failed!"
+              exit 1
+            }
+          }
 
           echo ""
           echo "=== Isi folder project_raw ==="
@@ -115,16 +104,22 @@ jobs:
           echo ""
           echo "=== Detecting Project Root ==="
           
-          # Cek apakah ada subfolder tunggal di root zip
-          SUB_DIR_COUNT=$(find project_raw -maxdepth 1 -mindepth 1 -type d | wc -l)
-          FILE_COUNT=$(find project_raw -maxdepth 1 -mindepth 1 -type f | wc -l)
+          # Cari pubspec.yaml
+          PUBSPEC_PATH=$(find project_raw -name "pubspec.yaml" -type f | head -n 1)
           
-          if [ "$SUB_DIR_COUNT" -eq 1 ] && [ "$FILE_COUNT" -eq 0 ]; then
-            PROJECT_DIR=$(find project_raw -maxdepth 1 -mindepth 1 -type d | head -n 1)
-            echo "✅ Single root folder detected: $PROJECT_DIR"
+          if [ -n "$PUBSPEC_PATH" ]; then
+            PROJECT_DIR=$(dirname "$PUBSPEC_PATH")
+            echo "✅ Found pubspec.yaml in: $PROJECT_DIR"
           else
-            PROJECT_DIR="project_raw"
-            echo "✅ Multiple files/folders at root, using project_raw"
+            # Cek apakah ada subfolder tunggal
+            SUB_DIR_COUNT=$(find project_raw -maxdepth 1 -mindepth 1 -type d | wc -l)
+            if [ "$SUB_DIR_COUNT" -eq 1 ]; then
+              PROJECT_DIR=$(find project_raw -maxdepth 1 -mindepth 1 -type d | head -n 1)
+              echo "✅ Single root folder: $PROJECT_DIR"
+            else
+              PROJECT_DIR="project_raw"
+              echo "✅ Using project_raw"
+            fi
           fi
 
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
@@ -152,6 +147,12 @@ jobs:
           channel: "stable"
           cache: true
 
+      # =========================
+      # FLUTTER DOCTOR (INFO)
+      # =========================
+      - name: Flutter Doctor
+        run: flutter doctor
+
       # ==========================================================
       # 🔍 TAHAP ANALYZE
       # ==========================================================
@@ -161,14 +162,12 @@ jobs:
           echo "=== Starting Automated Code Analysis ==="
 
           if [ -f "pubspec.yaml" ]; then
-            echo "🔍 Menjalankan flutter analyze..."
-            
-            flutter pub get
-            flutter analyze || true
-            
+            echo "🔍 Running flutter analyze..."
+            flutter pub get || echo "⚠️ pub get warning, continuing..."
+            flutter analyze || echo "⚠️ analyze warnings found"
           else
-            echo "☕ Project native / gradlew terdeteksi!"
-            echo "⚠️ Fitur analyze hanya support project Flutter (pubspec.yaml tidak ditemukan)."
+            echo "☕ Project native / gradlew detected!"
+            echo "⚠️ Analyze only works for Flutter projects"
           fi
 
       # ==========================================================
@@ -177,14 +176,8 @@ jobs:
       - name: Stop if Analyze Only
         if: ${{ github.event.inputs.only_analyze == 'true' }}
         run: |
-          echo "✅ Analyze-only mode selesai. Workflow dihentikan."
+          echo "✅ Analyze-only mode completed. Workflow stopped."
           exit 0
-
-      # =========================
-      # FLUTTER DOCTOR (INFO)
-      # =========================
-      - name: Flutter Doctor
-        run: flutter doctor
 
       # ==========================================================
       # 📦 TAHAP DOWNLOAD DEPENDENSI
@@ -194,9 +187,9 @@ jobs:
         run: |
           echo "=== Running flutter pub get ==="
           if [ -f "pubspec.yaml" ]; then
-            flutter pub get
+            flutter pub get --no-example
           else
-            echo "☕ Bukan project Flutter standar, skip pub get!"
+            echo "☕ Not a Flutter project, skipping pub get!"
           fi
 
       # ==========================================================
@@ -209,15 +202,20 @@ jobs:
           echo "Mode: ${{ github.event.inputs.build_type }}"
 
           if [ -f "pubspec.yaml" ]; then
-            echo "🔥 Project Flutter Terdeteksi!"
-            flutter build apk --${{ github.event.inputs.build_type }} --no-tree-shake-icons
+            echo "🔥 Flutter Project Detected!"
+            
+            # Clean dulu
+            flutter clean || true
+            
+            # Build dengan verbose agar error keliatan
+            flutter build apk --${{ github.event.inputs.build_type }} --verbose
             
           else
-            echo "☕ Project Native Android Terdeteksi!"
-            GRADLE_PATH=$(find . -name "gradlew" | head -n 1)
+            echo "☕ Native Android Project Detected!"
+            GRADLE_PATH=$(find . -name "gradlew" -type f | head -n 1)
             
             if [ -z "$GRADLE_PATH" ]; then
-              echo "❌ ERROR: File 'gradlew' tidak ditemukan!"
+              echo "❌ ERROR: 'gradlew' not found!"
               exit 1
             fi
             
@@ -226,9 +224,9 @@ jobs:
             chmod +x gradlew
             
             if [ "${{ github.event.inputs.build_type }}" = "debug" ]; then
-              ./gradlew assembleDebug
+              ./gradlew assembleDebug --stacktrace
             else
-              ./gradlew assembleRelease
+              ./gradlew assembleRelease --stacktrace
             fi
             cd -
           fi
@@ -241,11 +239,17 @@ jobs:
         run: |
           echo "=== Scanning for APK files ==="
           
-          # Cari APK di folder build
+          # Cari APK di project directory
           APK_PATH=$(find ${{ env.PROJECT_DIR }} -name "*.apk" -type f | head -n 1)
           
           if [ -z "$APK_PATH" ]; then
             echo "❌ No APK found!"
+            echo ""
+            echo "=== Build output directory ==="
+            find ${{ env.PROJECT_DIR }} -type d -name "build" -exec ls -la {} \;
+            echo ""
+            echo "=== All files ==="
+            find ${{ env.PROJECT_DIR }} -type f | grep -E "\.(apk|aab|json|txt)$"
             exit 1
           fi
           
@@ -266,17 +270,3 @@ jobs:
           path: ${{ env.APK_PATH }}
           retention-days: 7
           if-no-files-found: error
-
-      # =========================
-      # UPLOAD KE RELEASE (OPSIONAL)
-      # =========================
-      - name: Upload APK to Release
-        if: ${{ github.event.inputs.build_type == 'release' }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ env.APK_PATH }}
-          asset_name: app-release-${{ github.event.inputs.tag }}.apk
-          asset_content_type: application/vnd.android.package-archive
