@@ -106,5 +106,15 @@
     "created_at": "2026-07-01T05:50:03.987Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr1ok0ra0r2f": {
+    "job_id": "mr1ok0ra0r2f",
+    "release_id": 347261810,
+    "release_tag": "build-mr1ok0ra0r2f",
+    "run_id": 28497597216,
+    "user_id": 8715914739,
+    "created_at": "2026-07-01T06:14:36.322Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
