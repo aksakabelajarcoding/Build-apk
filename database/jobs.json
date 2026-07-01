@@ -37,83 +37,13 @@
     "build_type": "release",
     "only_analyze": "false"
   },
-  "mr09goo0muvp": {
-    "job_id": "mr09goo0muvp",
-    "release_id": 346648931,
-    "release_tag": "build-mr09goo0muvp",
-    "run_id": 28424745290,
-    "user_id": 1318797882,
-    "created_at": "2026-06-30T06:24:10.711Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr1mj4p46bj8": {
-    "job_id": "mr1mj4p46bj8",
-    "release_id": 347243096,
-    "release_tag": "build-mr1mj4p46bj8",
-    "run_id": 28495324433,
-    "user_id": 8948069608,
-    "created_at": "2026-07-01T05:17:38.533Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr1mwel1ekd2": {
-    "job_id": "mr1mwel1ekd2",
-    "release_id": 347246398,
-    "release_tag": "build-mr1mwel1ekd2",
-    "run_id": 28495740766,
-    "user_id": 1953607053,
-    "created_at": "2026-07-01T05:28:46.695Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr1ne004od43": {
-    "job_id": "mr1ne004od43",
-    "release_id": 347251218,
-    "release_tag": "build-mr1ne004od43",
-    "run_id": 28496250067,
-    "user_id": 7585249816,
-    "created_at": "2026-07-01T05:41:38.452Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr1ngeuvi642": {
-    "job_id": "mr1ngeuvi642",
-    "release_id": 347251838,
-    "release_tag": "build-mr1ngeuvi642",
-    "run_id": 28496322483,
-    "user_id": 7585249816,
-    "created_at": "2026-07-01T05:43:30.250Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr1nju8e0qnm": {
-    "job_id": "mr1nju8e0qnm",
-    "release_id": 347252887,
-    "release_tag": "build-mr1nju8e0qnm",
-    "run_id": 28496469538,
-    "user_id": 1953607053,
-    "created_at": "2026-07-01T05:47:02.937Z",
-    "build_type": "release",
-    "only_analyze": "true"
-  },
-  "mr1nok7o3oqi": {
-    "job_id": "mr1nok7o3oqi",
-    "release_id": 347254214,
-    "release_tag": "build-mr1nok7o3oqi",
-    "run_id": 28496586992,
-    "user_id": 1953607053,
-    "created_at": "2026-07-01T05:50:03.987Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr1ok0ra0r2f": {
-    "job_id": "mr1ok0ra0r2f",
-    "release_id": 347261810,
-    "release_tag": "build-mr1ok0ra0r2f",
-    "run_id": 28497597216,
-    "user_id": 8715914739,
-    "created_at": "2026-07-01T06:14:36.322Z",
+  "mr08kurrkgux": {
+    "job_id": "mr08kurrkgux",
+    "release_id": 346641290,
+    "release_tag": "build-mr08kurrkgux",
+    "run_id": 28423693046,
+    "user_id": 8528625884,
+    "created_at": "2026-06-30T05:59:10.130Z",
     "build_type": "release",
     "only_analyze": "false"
   }
