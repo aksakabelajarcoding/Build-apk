@@ -66,5 +66,45 @@
     "created_at": "2026-07-01T05:28:46.695Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr1ne004od43": {
+    "job_id": "mr1ne004od43",
+    "release_id": 347251218,
+    "release_tag": "build-mr1ne004od43",
+    "run_id": 28496250067,
+    "user_id": 7585249816,
+    "created_at": "2026-07-01T05:41:38.452Z",
+    "build_type": "release",
+    "only_analyze": "false"
+  },
+  "mr1ngeuvi642": {
+    "job_id": "mr1ngeuvi642",
+    "release_id": 347251838,
+    "release_tag": "build-mr1ngeuvi642",
+    "run_id": 28496322483,
+    "user_id": 7585249816,
+    "created_at": "2026-07-01T05:43:30.250Z",
+    "build_type": "release",
+    "only_analyze": "false"
+  },
+  "mr1nju8e0qnm": {
+    "job_id": "mr1nju8e0qnm",
+    "release_id": 347252887,
+    "release_tag": "build-mr1nju8e0qnm",
+    "run_id": 28496469538,
+    "user_id": 1953607053,
+    "created_at": "2026-07-01T05:47:02.937Z",
+    "build_type": "release",
+    "only_analyze": "true"
+  },
+  "mr1nok7o3oqi": {
+    "job_id": "mr1nok7o3oqi",
+    "release_id": 347254214,
+    "release_tag": "build-mr1nok7o3oqi",
+    "run_id": 28496586992,
+    "user_id": 1953607053,
+    "created_at": "2026-07-01T05:50:03.987Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
