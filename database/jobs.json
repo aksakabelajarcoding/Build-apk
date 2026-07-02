@@ -66,5 +66,15 @@
     "created_at": "2026-07-02T02:56:40.869Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr32vkiywrl3": {
+    "job_id": "mr32vkiywrl3",
+    "release_id": 347849069,
+    "release_tag": "build-mr32vkiywrl3",
+    "run_id": 28568245942,
+    "user_id": 8091007358,
+    "created_at": "2026-07-02T05:43:05.967Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
