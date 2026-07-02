@@ -56,5 +56,15 @@
     "created_at": "2026-07-01T18:26:49.996Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr2u1xwweh4m": {
+    "job_id": "mr2u1xwweh4m",
+    "release_id": 347788263,
+    "release_tag": "build-mr2u1xwweh4m",
+    "run_id": 28559278812,
+    "user_id": 1396753786,
+    "created_at": "2026-07-02T01:35:54.715Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
