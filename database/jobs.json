@@ -96,5 +96,25 @@
     "created_at": "2026-07-02T07:49:45.261Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr47ye5eh1k9": {
+    "job_id": "mr47ye5eh1k9",
+    "release_id": 348355097,
+    "release_tag": "build-mr47ye5eh1k9",
+    "run_id": 28631146577,
+    "user_id": 8716637780,
+    "created_at": "2026-07-03T00:52:46.564Z",
+    "build_type": "release",
+    "only_analyze": "false"
+  },
+  "mr47zp0wldx3": {
+    "job_id": "mr47zp0wldx3",
+    "release_id": 348355386,
+    "release_tag": "build-mr47zp0wldx3",
+    "run_id": 28631182252,
+    "user_id": 8716637780,
+    "created_at": "2026-07-03T00:53:47.238Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
