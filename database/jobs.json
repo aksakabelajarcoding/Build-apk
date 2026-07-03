@@ -126,35 +126,5 @@
     "created_at": "2026-07-03T03:36:20.761Z",
     "build_type": "release",
     "only_analyze": "false"
-  },
-  "mr4l39qrwpfb": {
-    "job_id": "mr4l39qrwpfb",
-    "release_id": 348456412,
-    "release_tag": "build-mr4l39qrwpfb",
-    "run_id": 28644183499,
-    "user_id": 8149709034,
-    "created_at": "2026-07-03T07:00:32.760Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr4poa24fg7q": {
-    "job_id": "mr4poa24fg7q",
-    "release_id": 348511900,
-    "release_tag": "build-mr4poa24fg7q",
-    "run_id": 28650523078,
-    "user_id": 8597501221,
-    "created_at": "2026-07-03T09:08:52.935Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr4rm85wacmh": {
-    "job_id": "mr4rm85wacmh",
-    "release_id": 348536818,
-    "release_tag": "build-mr4rm85wacmh",
-    "run_id": 28653383589,
-    "user_id": 7459227331,
-    "created_at": "2026-07-03T10:03:13.343Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
