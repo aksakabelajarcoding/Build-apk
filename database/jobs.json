@@ -146,5 +146,25 @@
     "created_at": "2026-07-04T04:35:50.348Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr5vnxunazyc": {
+    "job_id": "mr5vnxunazyc",
+    "release_id": 348864721,
+    "release_tag": "build-mr5vnxunazyc",
+    "run_id": 28695257773,
+    "user_id": 8597501221,
+    "created_at": "2026-07-04T04:44:19.425Z",
+    "build_type": "release",
+    "only_analyze": "false"
+  },
+  "mr5vr2u1mb15": {
+    "job_id": "mr5vr2u1mb15",
+    "release_id": 348865003,
+    "release_tag": "build-mr5vr2u1mb15",
+    "run_id": 28695313170,
+    "user_id": 8597501221,
+    "created_at": "2026-07-04T04:46:44.782Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
