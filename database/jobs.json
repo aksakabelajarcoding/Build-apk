@@ -207,54 +207,32 @@
     "build_type": "release",
     "only_analyze": "false"
   },
-  "mr65xe6mmuj0": {
-    "job_id": "mr65xe6mmuj0",
-    "release_id": 348906350,
-    "release_tag": "build-mr65xe6mmuj0",
-    "run_id": 28702021720,
-    "user_id": 8281608768,
-    "created_at": "2026-07-04T09:31:35.740Z",
+  "mr65n7nb7ppr": {
+    "job_id": "mr65n7nb7ppr",
+    "release_id": 348905238,
+    "release_tag": "build-mr65n7nb7ppr",
+    "run_id": 28701833253,
+    "user_id": 1974237300,
+    "created_at": "2026-07-04T09:23:45.689Z",
     "build_type": "release",
-    "only_analyze": "false"
+    "only_analyze": "false",
+    "is_compressed": false,
+    "original_size": 34400628,
+    "compressed_size": 34400628,
+    "compression_ratio": "0"
   },
-  "mr68g0onozn9": {
-    "job_id": "mr68g0onozn9",
-    "release_id": 348918464,
-    "release_tag": "build-mr68g0onozn9",
-    "run_id": 28703649181,
-    "user_id": 8010496133,
-    "created_at": "2026-07-04T10:42:04.269Z",
+  "mr662s6a0m1s": {
+    "job_id": "mr662s6a0m1s",
+    "release_id": 348907008,
+    "release_tag": "build-mr662s6a0m1s",
+    "run_id": 28702122928,
+    "user_id": 5871379389,
+    "created_at": "2026-07-04T09:35:48.128Z",
     "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr6d4m10eq22": {
-    "job_id": "mr6d4m10eq22",
-    "release_id": 348951016,
-    "release_tag": "build-mr6d4m10eq22",
-    "run_id": 28706834327,
-    "user_id": 8597501221,
-    "created_at": "2026-07-04T12:53:09.871Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr6d8dlwk3i2": {
-    "job_id": "mr6d8dlwk3i2",
-    "release_id": 348951549,
-    "release_tag": "build-mr6d8dlwk3i2",
-    "run_id": 28706904541,
-    "user_id": 8597501221,
-    "created_at": "2026-07-04T12:56:05.510Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr6dk97fdhix": {
-    "job_id": "mr6dk97fdhix",
-    "release_id": 348953070,
-    "release_tag": "build-mr6dk97fdhix",
-    "run_id": 28707137412,
-    "user_id": 8597501221,
-    "created_at": "2026-07-04T13:05:20.148Z",
-    "build_type": "release",
-    "only_analyze": "false"
+    "only_analyze": "false",
+    "is_compressed": false,
+    "original_size": 36503567,
+    "compressed_size": 36503567,
+    "compression_ratio": "0"
   }
 }
