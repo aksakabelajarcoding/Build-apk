@@ -196,5 +196,15 @@
     "created_at": "2026-07-04T07:52:10.608Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr63lrkg6crt": {
+    "job_id": "mr63lrkg6crt",
+    "release_id": 348896837,
+    "release_tag": "build-mr63lrkg6crt",
+    "run_id": 28700491284,
+    "user_id": 8597501221,
+    "created_at": "2026-07-04T08:26:34.145Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
