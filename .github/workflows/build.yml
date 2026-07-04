@@ -6,20 +6,31 @@ on:
       zip_url:
         description: "URL download ZIP project Flutter"
         required: true
+        type: string
 
       tag:
         description: "Tag build"
         required: true
+        type: string
 
       build_type:
         description: "debug / release"
-        required: true
+        required: false
         default: "release"
+        type: string
         
       only_analyze:
         description: "Hanya jalankan analyze (true/false)"
         required: false
         default: "false"
+        type: string
+      
+      # TAMBAHKAN INI AGAR KOMPATIBEL DENGAN BOT
+      is_compressed:
+        description: "File ZIP terkompresi (true/false)"
+        required: false
+        default: "false"
+        type: string
 
 jobs:
   build:
@@ -45,25 +56,37 @@ jobs:
         run: |
           echo "=== Downloading ZIP ==="
           echo "URL: ${{ github.event.inputs.zip_url }}"
+          echo "Compressed: ${{ github.event.inputs.is_compressed }}"
 
-          curl -L \
-            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
-            -H "Accept: application/octet-stream" \
-            "${{ github.event.inputs.zip_url }}" \
-            -o project.zip \
-            -w "\n=== HTTP Status: %{http_code} ===\n=== Final URL: %{url_effective} ===\n"
+          # Download dengan atau tanpa auth tergantung URL
+          if [[ "${{ github.event.inputs.zip_url }}" == *"github.com"* ]]; then
+            curl -L \
+              -H "Authorization: Bearer ${{ secrets.GH_TOKEN || github.token }}" \
+              -H "Accept: application/octet-stream" \
+              "${{ github.event.inputs.zip_url }}" \
+              -o project.zip \
+              -w "\n=== HTTP Status: %{http_code} ===\n"
+          else
+            curl -L \
+              "${{ github.event.inputs.zip_url }}" \
+              -o project.zip \
+              -w "\n=== HTTP Status: %{http_code} ===\n"
+          fi
 
           echo ""
           echo "=== File Info ==="
           ls -lh project.zip
 
+          # Jika file terkompresi (gz), ekstrak dulu
+          if [[ "${{ github.event.inputs.is_compressed }}" == "true" ]]; then
+            echo "📦 File terkompresi, mengekstrak gzip..."
+            gunzip -f project.zip || true
+            mv project project.zip 2>/dev/null || true
+          fi
+
           echo ""
           echo "=== File Type ==="
           file project.zip
-
-          echo ""
-          echo "=== First Bytes ==="
-          xxd project.zip | head -2
 
       # =========================
       # EXTRACT ZIP
@@ -75,8 +98,9 @@ jobs:
           if ! unzip -t project.zip > /dev/null 2>&1; then
             echo "❌ File bukan ZIP valid!"
             echo ""
-            echo "=== Isi file ==="
-            cat project.zip
+            echo "=== Isi file (50 bytes pertama) ==="
+            head -c 50 project.zip
+            echo ""
             exit 1
           fi
 
@@ -91,19 +115,21 @@ jobs:
           find project_raw | head -50
 
           echo ""
-          echo "=== Mengunci Project Dir (Manut Mode) ==="
+          echo "=== Deteksi Project Root ==="
           
           SUB_DIR_COUNT=$(find project_raw -maxdepth 1 -mindepth 1 -type d | wc -l)
           FILE_COUNT=$(find project_raw -maxdepth 1 -mindepth 1 -type f | wc -l)
           
           if [ "$SUB_DIR_COUNT" -eq 1 ] && [ "$FILE_COUNT" -eq 0 ]; then
             PROJECT_DIR=$(find project_raw -maxdepth 1 -mindepth 1 -type d | head -n 1)
+            echo "📁 Detected single root folder: $PROJECT_DIR"
           else
             PROJECT_DIR="project_raw"
+            echo "📁 Multiple files/folders at root, using project_raw"
           fi
 
-          echo "✅ Project root langsung dikunci di: $PROJECT_DIR"
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
+          echo "✅ Project root: $PROJECT_DIR"
 
       # =========================
       # JAVA
@@ -126,7 +152,6 @@ jobs:
 
       # ==========================================================
       # 🔍 TAHAP ANALYZE — STEP 1: Jalankan & cetak hasil
-      # (Dipisah dari exit 1 biar log tidak ter-truncate)
       # ==========================================================
       - name: Analyze Project Code
         working-directory: ${{ env.PROJECT_DIR }}
@@ -153,13 +178,12 @@ jobs:
 
       # ==========================================================
       # 🔍 TAHAP ANALYZE — STEP 2: Stop workflow jika only_analyze
-      # (Dipisah biar log step di atas sudah ter-commit ke GitHub)
       # ==========================================================
       - name: Stop if Analyze Only
         if: ${{ github.event.inputs.only_analyze == 'true' }}
         run: |
-          echo "Analyze-only mode aktif. Workflow dihentikan di sini."
-          exit 1
+          echo "✅ Analyze-only mode selesai. Workflow dihentikan."
+          exit 0
 
       # =========================
       # FLUTTER DOCTOR
@@ -175,7 +199,7 @@ jobs:
         run: |
           echo "=== Running flutter pub get ==="
           if [ -f "pubspec.yaml" ]; then
-            timeout 120s flutter pub get || echo "⚠️ Gagal download package karena network server, coba lanjut aja..."
+            flutter pub get || echo "⚠️ Gagal download package, lanjut..."
           else
             echo "☕ Bukan project Flutter standar, skip pub get!"
           fi
@@ -224,20 +248,21 @@ jobs:
           echo "=== APK Output Scanning (Global Mode) ==="
 
           echo "Mencari file APK di seluruh direktori..."
-          find $GITHUB_WORKSPACE -name "*.apk"
+          find $GITHUB_WORKSPACE -name "*.apk" -type f
 
-          APK_FOUND=$(find $GITHUB_WORKSPACE -name "*.apk" | head -n 1)
+          APK_FOUND=$(find $GITHUB_WORKSPACE -name "*.apk" -type f | head -n 1)
 
           if [ -z "$APK_FOUND" ]; then
-            echo "Error: Berkas biner APK beneran gak dicetak sama sekali oleh compiler."
+            echo "❌ Error: Tidak ada file APK yang ditemukan!"
+            echo ""
+            echo "=== Struktur project ==="
+            find $GITHUB_WORKSPACE -type d | head -30
             exit 1
           fi
 
-          APK_PATH=$(echo "$APK_FOUND" | sed "s|$GITHUB_WORKSPACE/||")
-
-          echo "✅ APK Sukses Ditemukan di Jalur: $APK_PATH"
+          echo "✅ APK Sukses Ditemukan di: $APK_FOUND"
           
-          echo "PROJECT_DIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+          APK_PATH=$(echo "$APK_FOUND" | sed "s|$GITHUB_WORKSPACE/||")
           echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
 
           echo ""
