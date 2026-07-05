@@ -376,55 +376,5 @@
     "created_at": "2026-07-05T09:49:14.286Z",
     "build_type": "release",
     "only_analyze": "false"
-  },
-  "mr7pz9nykz2w": {
-    "job_id": "mr7pz9nykz2w",
-    "release_id": 349151227,
-    "release_tag": "build-mr7pz9nykz2w",
-    "run_id": 28739553651,
-    "user_id": 1969204978,
-    "created_at": "2026-07-05T11:40:41.246Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr7untcbyk5x": {
-    "job_id": "mr7untcbyk5x",
-    "release_id": 349173467,
-    "release_tag": "build-mr7untcbyk5x",
-    "run_id": 28743015816,
-    "user_id": 8088569770,
-    "created_at": "2026-07-05T13:52:00.202Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr7up6s9roko": {
-    "job_id": "mr7up6s9roko",
-    "release_id": 349173676,
-    "release_tag": "build-mr7up6s9roko",
-    "run_id": 28743036887,
-    "user_id": 8051906389,
-    "created_at": "2026-07-05T13:52:49.049Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr7v4lvw7p3v": {
-    "job_id": "mr7v4lvw7p3v",
-    "release_id": 349175821,
-    "release_tag": "build-mr7v4lvw7p3v",
-    "run_id": 28743366152,
-    "user_id": 8051906389,
-    "created_at": "2026-07-05T14:04:48.303Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr811lw8g0dy": {
-    "job_id": "mr811lw8g0dy",
-    "release_id": 349205965,
-    "release_tag": "build-mr811lw8g0dy",
-    "run_id": 28747945569,
-    "user_id": 7962703342,
-    "created_at": "2026-07-05T16:50:28.044Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
