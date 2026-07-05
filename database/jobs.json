@@ -376,5 +376,15 @@
     "created_at": "2026-07-05T09:49:14.286Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr7pz9nykz2w": {
+    "job_id": "mr7pz9nykz2w",
+    "release_id": 349151227,
+    "release_tag": "build-mr7pz9nykz2w",
+    "run_id": 28739553651,
+    "user_id": 1969204978,
+    "created_at": "2026-07-05T11:40:41.246Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
