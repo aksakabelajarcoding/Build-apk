@@ -1,7 +1,4 @@
 {
-  "active": true,
-  "features": {},
-  "reason": "bentar",
-  "eta": "1 hari",
-  "started_at": "2026-07-05T17:28:37.252Z"
+  "active": false,
+  "features": {}
 }
