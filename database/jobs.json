@@ -346,5 +346,15 @@
     "created_at": "2026-07-05T03:55:40.877Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mr7jlhh3k96x": {
+    "job_id": "mr7jlhh3k96x",
+    "release_id": 349123330,
+    "release_tag": "build-mr7jlhh3k96x",
+    "run_id": 28735115999,
+    "user_id": 7879809615,
+    "created_at": "2026-07-05T08:41:59.046Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
