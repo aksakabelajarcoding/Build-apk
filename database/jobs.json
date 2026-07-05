@@ -376,25 +376,5 @@
     "created_at": "2026-07-05T09:49:14.286Z",
     "build_type": "release",
     "only_analyze": "false"
-  },
-  "mr816htwrty4": {
-    "job_id": "mr816htwrty4",
-    "release_id": 349206603,
-    "release_tag": "build-mr816htwrty4",
-    "run_id": 28748051742,
-    "user_id": 8642041248,
-    "created_at": "2026-07-05T16:54:25.738Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr81uxnx028f": {
-    "job_id": "mr81uxnx028f",
-    "release_id": 349210082,
-    "release_tag": "build-mr81uxnx028f",
-    "run_id": 28748566019,
-    "user_id": 8642041248,
-    "created_at": "2026-07-05T17:13:30.453Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
