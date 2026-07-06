@@ -386,15 +386,5 @@
     "created_at": "2026-07-05T18:29:41.259Z",
     "build_type": "release",
     "only_analyze": "false"
-  },
-  "mr8xclvs0wa5": {
-    "job_id": "mr8xclvs0wa5",
-    "release_id": 349395622,
-    "release_tag": "build-mr8xclvs0wa5",
-    "run_id": 28776461517,
-    "user_id": 8756694861,
-    "created_at": "2026-07-06T07:54:50.823Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
