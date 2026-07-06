@@ -536,15 +536,5 @@
     "created_at": "2026-07-06T10:21:38.730Z",
     "build_type": "release",
     "only_analyze": "false"
-  },
-  "mr9cidbnqf8g": {
-    "job_id": "mr9cidbnqf8g",
-    "release_id": 349630104,
-    "release_tag": "build-mr9cidbnqf8g",
-    "run_id": 28801095673,
-    "user_id": 7489437401,
-    "created_at": "2026-07-06T14:59:10.475Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
