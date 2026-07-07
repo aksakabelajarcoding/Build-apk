@@ -436,25 +436,5 @@
     "created_at": "2026-07-06T10:42:44.249Z",
     "build_type": "release",
     "only_analyze": "false"
-  },
-  "mr9o9wapco3h": {
-    "job_id": "mr9o9wapco3h",
-    "release_id": 349845269,
-    "release_tag": "build-mr9o9wapco3h",
-    "run_id": 28821079777,
-    "user_id": 7442318372,
-    "created_at": "2026-07-06T20:28:29.551Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mr9ocampqenz": {
-    "job_id": "mr9ocampqenz",
-    "release_id": 349846995,
-    "release_tag": "build-mr9ocampqenz",
-    "run_id": 28821189499,
-    "user_id": 7442318372,
-    "created_at": "2026-07-06T20:30:21.817Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
