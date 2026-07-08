@@ -456,25 +456,5 @@
     "created_at": "2026-07-07T11:47:09.320Z",
     "build_type": "debug",
     "only_analyze": "false"
-  },
-  "mrcbgi4awc17": {
-    "job_id": "mrcbgi4awc17",
-    "release_id": 351066670,
-    "release_tag": "build-mrcbgi4awc17",
-    "run_id": 28960318649,
-    "user_id": 1478220118,
-    "created_at": "2026-07-08T16:53:06.311Z",
-    "build_type": "release",
-    "only_analyze": "false"
-  },
-  "mrcc0hd5ha6t": {
-    "job_id": "mrcc0hd5ha6t",
-    "release_id": 351075127,
-    "release_tag": "build-mrcc0hd5ha6t",
-    "run_id": 28961270579,
-    "user_id": 1478220118,
-    "created_at": "2026-07-08T17:08:33.171Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
