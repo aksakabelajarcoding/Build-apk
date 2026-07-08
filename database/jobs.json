@@ -456,15 +456,5 @@
     "created_at": "2026-07-07T11:47:09.320Z",
     "build_type": "debug",
     "only_analyze": "false"
-  },
-  "mrc369ff9j8i": {
-    "job_id": "mrc369ff9j8i",
-    "release_id": 350929844,
-    "release_tag": "build-mrc369ff9j8i",
-    "run_id": 28944603310,
-    "user_id": 7646909283,
-    "created_at": "2026-07-08T13:01:09.577Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
