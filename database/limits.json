@@ -85,7 +85,8 @@
       "rename": 1
     },
     "6300251495": {
-      "functions": 1
+      "functions": 1,
+      "renameall": 1
     }
   }
 }
