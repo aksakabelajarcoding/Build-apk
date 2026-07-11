@@ -506,15 +506,5 @@
     "created_at": "2026-07-11T03:36:57.749Z",
     "build_type": "release",
     "only_analyze": "false"
-  },
-  "mrggx8hswvcs": {
-    "job_id": "mrggx8hswvcs",
-    "release_id": 352534824,
-    "release_tag": "build-mrggx8hswvcs",
-    "run_id": 29156436161,
-    "user_id": 6300251495,
-    "created_at": "2026-07-11T14:37:08.484Z",
-    "build_type": "release",
-    "only_analyze": "false"
   }
 }
