@@ -716,5 +716,35 @@
     "created_at": "2026-07-19T09:04:40.078Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mrrl51sgpai4": {
+    "job_id": "mrrl51sgpai4",
+    "release_id": 356301902,
+    "release_tag": "build-mrrl51sgpai4",
+    "run_id": 29681400754,
+    "user_id": 7780595921,
+    "created_at": "2026-07-19T09:20:34.299Z",
+    "build_type": "debug",
+    "only_analyze": "false"
+  },
+  "mrrl6h9l2sb5": {
+    "job_id": "mrrl6h9l2sb5",
+    "release_id": 356302052,
+    "release_tag": "build-mrrl6h9l2sb5",
+    "run_id": 29681434379,
+    "user_id": 7780595921,
+    "created_at": "2026-07-19T09:21:40.696Z",
+    "build_type": "release",
+    "only_analyze": "false"
+  },
+  "mrrljyso05v8": {
+    "job_id": "mrrljyso05v8",
+    "release_id": 356303762,
+    "release_tag": "build-mrrljyso05v8",
+    "run_id": 29681751389,
+    "user_id": 8481346537,
+    "created_at": "2026-07-19T09:32:11.675Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
