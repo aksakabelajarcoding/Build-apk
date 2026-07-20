@@ -806,5 +806,15 @@
     "created_at": "2026-07-20T08:10:35.700Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mrszg1rsl1bc": {
+    "job_id": "mrszg1rsl1bc",
+    "release_id": 356591495,
+    "release_tag": "build-mrszg1rsl1bc",
+    "run_id": 29729139209,
+    "user_id": 8481346537,
+    "created_at": "2026-07-20T08:48:51.289Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
