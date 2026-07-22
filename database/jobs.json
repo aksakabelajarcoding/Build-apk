@@ -876,5 +876,35 @@
     "created_at": "2026-07-21T14:46:32.447Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "mrvv1ynqd1lc": {
+    "job_id": "mrvv1ynqd1lc",
+    "release_id": 357889821,
+    "release_tag": "build-mrvv1ynqd1lc",
+    "run_id": 29906822558,
+    "user_id": 7670048402,
+    "created_at": "2026-07-22T09:09:12.976Z",
+    "build_type": "release",
+    "only_analyze": "false"
+  },
+  "mrvv38hljohs": {
+    "job_id": "mrvv38hljohs",
+    "release_id": 357890313,
+    "release_tag": "build-mrvv38hljohs",
+    "run_id": 29906884747,
+    "user_id": 7670048402,
+    "created_at": "2026-07-22T09:10:11.763Z",
+    "build_type": "debug",
+    "only_analyze": "true"
+  },
+  "mrvv4y1ownce": {
+    "job_id": "mrvv4y1ownce",
+    "release_id": 357891036,
+    "release_tag": "build-mrvv4y1ownce",
+    "run_id": 29906971258,
+    "user_id": 7670048402,
+    "created_at": "2026-07-22T09:11:31.581Z",
+    "build_type": "debug",
+    "only_analyze": "false"
   }
 }
