@@ -8,5 +8,15 @@
     "created_at": "2026-07-26T15:25:51.502Z",
     "build_type": "release",
     "only_analyze": "false"
+  },
+  "ms1zajtwwq1n": {
+    "job_id": "ms1zajtwwq1n",
+    "release_id": 360056517,
+    "release_tag": "build-ms1zajtwwq1n",
+    "run_id": 30209210508,
+    "user_id": 7424071960,
+    "created_at": "2026-07-26T15:54:30.359Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
