@@ -28,5 +28,15 @@
     "created_at": "2026-07-26T16:39:06.723Z",
     "build_type": "release",
     "only_analyze": "true"
+  },
+  "ms2ssfjbg41l": {
+    "job_id": "ms2ssfjbg41l",
+    "release_id": 360220866,
+    "release_tag": "build-ms2ssfjbg41l",
+    "run_id": 30240397539,
+    "user_id": 8313241913,
+    "created_at": "2026-07-27T05:40:15.944Z",
+    "build_type": "release",
+    "only_analyze": "false"
   }
 }
