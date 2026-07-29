@@ -1,7 +1,66 @@
 {
+  "users": {
+    "8389860062": {
+      "coin": 1000000000,
+      "joined": true,
+      "refCount": 0,
+      "lastClaim": 0,
+      "isBanned": false,
+      "username": "Afifnailghany123",
+      "joinedAt": 1785324192711,
+      "history": [],
+      "bonusClaimed": true
+    },
+    "7886196751": {
+      "coin": 1000000000,
+      "joined": true,
+      "refCount": 0,
+      "lastClaim": 0,
+      "isBanned": false,
+      "username": "RealUcup",
+      "joinedAt": 1785324192847,
+      "history": [],
+      "bonusClaimed": true
+    },
+    "8392736668": {
+      "coin": 1000000000,
+      "joined": true,
+      "refCount": 0,
+      "lastClaim": 0,
+      "isBanned": false,
+      "username": "",
+      "joinedAt": 1785324379759,
+      "history": [],
+      "bonusClaimed": true
+    }
+  },
+  "scripts": [],
+  "redeemCodes": {},
+  "maintenanceMode": false,
+  "groups": {},
+  "noktelData": {
+    "hadiah": {},
+    "userLimits": {}
+  },
+  "nokosData": {
+    "hadiah": {},
+    "userLimits": {}
+  },
+  "tradingData": {
+    "harga": {
+      "BTC": 33922439,
+      "ETH": 41213610,
+      "SOL": 1257086
+    },
+    "userSlots": {},
+    "lastUpdate": 1785324367755
+  },
+  "jualSCData": {
+    "submissions": {},
+    "pending": {}
+  },
+  "shopBulk": {},
   "whitelist": [
-    6163304242,
-    1653723305,
-    8392736668
+    7657722159
   ]
 }
